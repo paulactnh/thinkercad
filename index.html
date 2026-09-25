@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistemas Arduino — Tinkercad + Testes Físicos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleap is.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <span class="eyebrow-chip"><span class="dot"></span> Projeto de Arduino · curso técnico</span>
+      <h1>Três sistemas eletrônicos, do circuito virtual à bancada real</h1>
+      <p class="lead">Cada projeto abaixo foi montado e simulado no Tinkercad e, em seguida, remontado fisicamente com Arduino para confirmar seu funcionamento. Nesta página você encontra a lógica de cada sistema, o vídeo do teste e o código completo utilizado.</p>
+    </div>
+  </header>
+
+  <nav class="toc">
+    <div class="toc-inner">
+      <a href="#sistema-1">Sistema 1 — Sensor de presença</a>
+      <a href="#sistema-2">Sistema 2 — Estacionamento inteligente</a>
+      <a href="#sistema-3">Sistema 3 — Monitor de estufa</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+
+    <!-- ======================= SISTEMA 1 ======================= -->
+    <section class="sistema" id="sistema-1">
+      <div class="sis-head">
+        <span class="sis-num">SISTEMA 01</span>
+      </div>
+      <h2>Iluminação automática por presença</h2>
+      <p class="sis-tag">Um sensor de presença combinado a um sensor de luz decide acender o LED — economizando energia ao não ligar a luz quando o ambiente já está claro.</p>
+
+      <div class="grid-2">
+        <div>
+          <div class="panel desc">
+            <h3>Como funciona</h3>
+            <p>O sensor PIR detecta movimento de pessoas na área monitorada, enquanto o LDR (sensor de luminosidade) mede o quanto de luz existe no ambiente. O Arduino só liga o LED quando as duas condições de "ambiente escuro" e "pessoa presente" acontecem ao mesmo tempo — exatamente como um sensor de presença de corredor.</p>
+            <ul class="sensor-list">
+              <li><b>PIR (pino 2):</b> detecta movimento (HIGH/LOW)</li>
+              <li><b>LDR (pino A0):</b> lê a luminosidade (0–1023)</li>
+              <li><b>LED (pino 13):</b> saída controlada</li>
+            </ul>
+            <div class="logic">
+              <div class="logic-row"><span class="cond">Pessoa presente + ambiente escuro</span><span class="out">LED ligado</span></div>
+              <div class="logic-row"><span class="cond">Pessoa presente + ambiente claro</span><span class="out">LED desligado</span></div>
+              <div class="logic-row"><span class="cond">Sem pessoa</span><span class="out">LED desligado</span></div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:22px;">
+            <h3>Simulador da lógica <span class="fn">arraste e clique</span></h3>
+            <div class="sim">
+              <button class="btn-toggle" id="toggle-presenca">Presença: <span id="presenca-label">ausente</span></button>
+              <div>
+                <label for="luz1">Luminosidade do LDR (limite = 500) <span id="luzVal1">500</span></label>
+                <input type="range" id="luz1" min="0" max="1023" value="500">
+              </div>
+              <div class="sim-result">
+                <span class="led" id="led1"></span>
+                <span id="status1">LED desligado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-box">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="color:var(--muted)"><path d="M15 10l5-3v10l-5-3"/><rect x="2" y="6" width="13" height="12" rx="2"/></svg>
+          <p>Vídeo do Sistema 1 em funcionamento</p>
+          <span class="hint">Troque este bloco pela tag &lt;video&gt; ou por um &lt;iframe&gt; do YouTube</span>
+        </div>
+      </div>
+
+      <div class="code-panel">
+        <div class="code-bar">
+          <span class="fname">💡 <b>sistema1_presenca.ino</b></span>
+          <button class="copy-btn" data-target="code1">copiar código</button>
+        </div>
+        <pre><code id="code1">const int led = 13;
+const int pir = 2;
+const int ldr = A0;
+
+int limiteLuz = 500; 
+
+void setup() {
+
+  pinMode(led, OUTPUT);
+  pinMode(pir, INPUT);
+
+  Serial.begin(9600);
+
+}
+
+void loop() {
+
+  int movimento = digitalRead(pir);
+  int luz = analogRead(ldr);
+
+  Serial.println(luz);
+
+  if (movimento == HIGH && luz < limiteLuz) {
+    digitalWrite(led, HIGH);
+  }
+  else {
+    digitalWrite(led, LOW);
+  }
+
+   Serial.print("Movimento: ");
+  Serial.print(movimento);
+  Serial.print(" | Luminosidade: ");
+  Serial.print(luz);
+  Serial.print(" | Limite: ");
+  Serial.println(limiteLuz);
+  
+  delay(100);
+
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================= SISTEMA 2 ======================= -->
+    <section class="sistema" id="sistema-2">
+      <div class="sis-head">
+        <span class="sis-num">SISTEMA 02</span>
+      </div>
+      <h2>Estacionamento inteligente</h2>
+      <p class="sis-tag">Um sensor ultrassônico mede a distância até o veículo e avisa o motorista com o LED: apagado quando há espaço de sobra, piscando ao se aproximar e aceso fixo quando é hora de parar.</p>
+
+      <div class="grid-2">
+        <div>
+          <div class="panel desc">
+            <h3>Como funciona</h3>
+            <p>O sensor ultrassônico HC-SR04 mede continuamente a distância até o objeto à frente. Um potenciômetro permite ajustar, na hora, qual é a distância limite considerada segura — útil para calibrar o sistema para vagas de tamanhos diferentes.</p>
+            <ul class="sensor-list">
+              <li><b>Trig / Echo (pinos 9 e 10):</b> sensor ultrassônico HC-SR04</li>
+              <li><b>Potenciômetro (pino A0):</b> ajusta o limite de distância (10–150 cm)</li>
+              <li><b>LED (pino 13):</b> indica a proximidade</li>
+            </ul>
+            <div class="logic">
+              <div class="logic-row"><span class="cond">Objeto distante</span><span class="out">LED desligado</span></div>
+              <div class="logic-row"><span class="cond">Objeto se aproximando</span><span class="out">LED piscando</span></div>
+              <div class="logic-row"><span class="cond">Objeto dentro da distância definida</span><span class="out">LED ligado</span></div>
+              <div class="logic-row"><span class="cond">Potenciômetro</span><span class="out">define o limite</span></div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:22px;">
+            <h3>Simulador da lógica <span class="fn">arraste e clique</span></h3>
+            <div class="sim">
+              <div>
+                <label for="dist2">Distância do objeto <span id="distVal2">80 cm</span></label>
+                <input type="range" id="dist2" min="0" max="200" value="80">
+              </div>
+              <div>
+                <label for="pot2">Limite do potenciômetro <span id="potVal2">80 cm</span></label>
+                <input type="range" id="pot2" min="10" max="150" value="80">
+              </div>
+              <div class="sim-result">
+                <span class="led" id="led2"></span>
+                <span id="status2">LED desligado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-box">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="color:var(--muted)"><path d="M15 10l5-3v10l-5-3"/><rect x="2" y="6" width="13" height="12" rx="2"/></svg>
+          <p>Vídeo do Sistema 2 em funcionamento</p>
+          <span class="hint">Troque este bloco pela tag &lt;video&gt; ou por um &lt;iframe&gt; do YouTube</span>
+        </div>
+      </div>
+
+      <div class="code-panel">
+        <div class="code-bar">
+          <span class="fname">🅿️ <b>sistema2_estacionamento.ino</b></span>
+          <button class="copy-btn" data-target="code2">copiar código</button>
+        </div>
+        <pre><code id="code2">// Pinos
+const int trigPin = 9;
+const int echoPin = 10;
+const int led = 13;
+const int pot = A0;
+
+long duracao;
+float distancia;
+int valorPot;
+float limite;
+
+void setup() {
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(led, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+  
+    valorPot = analogRead(pot);
+
+  // Converte para distância entre 10 e 50 cm
+  limite = map(valorPot, 0, 1023, 10, 150);
+
+  // Dispara o ultrassônico
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+
+  digitalWrite(trigPin, LOW);
+
+  // Mede o tempo
+  duracao = pulseIn(echoPin, HIGH);
+
+  // Calcula distância em cm
+  distancia = duracao * 0.0343 / 2;
+
+  Serial.print("Distancia: ");
+  Serial.print(distancia);
+  Serial.print(" cm   Limite: ");
+  Serial.println(limite);
+
+  // Lógica do desafio
+
+  if (distancia > limite) {
+
+    // Longe
+    digitalWrite(led, LOW);
+
+  } else if (distancia > limite / 2) {
+
+    // Aproximando
+    digitalWrite(led, HIGH);
+    delay(300);
+    digitalWrite(led, LOW);
+    delay(300);
+
+  } else {
+
+    // Muito perto
+    digitalWrite(led, HIGH);
+
+  }
+
+  delay(50);
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ======================= SISTEMA 3 ======================= -->
+    <section class="sistema" id="sistema-3">
+      <div class="sis-head">
+        <span class="sis-num">SISTEMA 03</span>
+      </div>
+      <h2>Monitoramento de estufa</h2>
+      <p class="sis-tag">Temperatura e umidade são lidas continuamente e três LEDs coloridos informam, à distância, se as plantas estão em condição ideal, com calor excessivo ou com pouca umidade.</p>
+
+      <div class="grid-2">
+        <div>
+          <div class="panel desc">
+            <h3>Como funciona</h3>
+            <p>O sensor de temperatura (TMP36) converte a tensão lida em graus Celsius, enquanto o sensor de umidade informa um valor de 0 a 1023. Combinando as duas leituras, o Arduino acende um dos três LEDs para indicar rapidamente a condição da estufa, sem precisar olhar números no monitor serial.</p>
+            <ul class="sensor-list">
+              <li><b>TMP36 (pino A0):</b> sensor de temperatura</li>
+              <li><b>Sensor de umidade (pino A1):</b> leitura analógica de 0 a 1023</li>
+              <li><b>LEDs (pinos 8, 10 e 12):</b> verde, amarelo e vermelho</li>
+            </ul>
+            <div class="logic">
+              <div class="logic-row"><span class="cond">Temperatura e umidade dentro dos valores definidos</span><span class="out" style="color:var(--green)">LED verde</span></div>
+              <div class="logic-row"><span class="cond">Temperatura acima do limite</span><span class="out" style="color:var(--red)">LED vermelho</span></div>
+              <div class="logic-row"><span class="cond">Umidade abaixo do limite</span><span class="out" style="color:var(--yellow)">LED amarelo</span></div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:22px;">
+            <h3>Simulador da lógica <span class="fn">arraste e clique</span></h3>
+            <div class="sim">
+              <div>
+                <label for="temp3">Temperatura °C <span id="tempVal3">25</span></label>
+                <input type="range" id="temp3" min="-20" max="50" value="25">
+              </div>
+              <div>
+                <label for="hum3">Leitura de umidade (0–1023) <span id="humVal3">300</span></label>
+                <input type="range" id="hum3" min="0" max="1023" value="300">
+              </div>
+              <div class="sim-result leds3">
+                <span class="led-trio"><span class="led" id="ledVerde3"></span> verde</span>
+                <span class="led-trio"><span class="led" id="ledAmarelo3"></span> amarelo</span>
+                <span class="led-trio"><span class="led" id="ledVermelho3"></span> vermelho</span>
+              </div>
+              <div id="status3" style="font-size:13.5px; color:var(--muted);">Condição adequada</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-box">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="color:var(--muted)"><path d="M15 10l5-3v10l-5-3"/><rect x="2" y="6" width="13" height="12" rx="2"/></svg>
+          <p>Vídeo do Sistema 3 em funcionamento</p>
+          <span class="hint">Troque este bloco pela tag &lt;video&gt; ou por um &lt;iframe&gt; do YouTube</span>
+        </div>
+      </div>
+
+      <div class="code-panel">
+        <div class="code-bar">
+          <span class="fname">🌱 <b>sistema3_estufa.ino</b></span>
+          <button class="copy-btn" data-target="code3">copiar código</button>
+        </div>
+        <pre><code id="code3">const int tempPin = A0;
+const int umidadePin = A1;
+
+const int verde = 8;
+const int amarelo = 10;
+const int vermelho = 12;
+
+void setup() {
+
+  Serial.begin(9600);
+
+  pinMode(verde, OUTPUT);
+  pinMode(amarelo, OUTPUT);
+  pinMode(vermelho, OUTPUT);
+
+}
+
+void loop() {
+
+  // TMP36
+  int leituraTemp = analogRead(tempPin);
+
+  float tensao = leituraTemp * (5.0 / 1023.0);
+
+  float temperatura = (tensao - 0.5) * 100;
+
+  // Sensor de umidade
+  int umidade = analogRead(umidadePin);
+
+  Serial.print("Temperatura: ");
+  Serial.print(temperatura);
+
+  Serial.print(" C   Umidade: ");
+  Serial.println(umidade);
+
+  digitalWrite(verde, LOW);
+  digitalWrite(amarelo, LOW);
+  digitalWrite(vermelho, LOW);
+
+  bool temperaturaRuim = temperatura > 30 || temperatura < -10;
+
+  bool umidadeBaixa = umidade < 50;
+
+  if (!temperaturaRuim && !umidadeBaixa) {
+
+    return digitalWrite(verde, HIGH);
+
+  }
+
+  if (temperaturaRuim && umidadeBaixa) {
+
+    return digitalWrite(vermelho, HIGH);
+
+  }
+
+  if (umidadeBaixa || temperaturaRuim) {
+
+    return digitalWrite(amarelo, HIGH);
+
+  }
+
+  delay(500);
+
+}</code></pre>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="badges">
+      <span class="meta-pill">Tinkercad</span>
+      <span class="meta-pill">Arduino Uno</span>
+      <span class="meta-pill">Teste físico validado</span>
+    </div>
+    <p>Projetos desenvolvidos, simulados e testados fisicamente para fins de estudo em eletrônica e programação embarcada.</p>
+  </footer>
+
+<script src="script.js"></script>
+</body>
+</html>
