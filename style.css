@@ -101,16 +101,7 @@ img,svg{display:block;}
   flex-wrap:wrap;
   gap:10px;
 }
-.meta-pill{
-  font-family:var(--mono);
-  font-size:13px;
-  color:var(--text);
-  background:var(--panel);
-  border:1px solid var(--border);
-  padding:9px 14px;
-  border-radius:10px;
-}
-.meta-pill b{color:var(--amber);font-weight:600;}
+
 
 /* ---------- NAV ---------- */
 .toc{
@@ -143,7 +134,7 @@ img,svg{display:block;}
 
 /* ---------- SYSTEM SECTIONS ---------- */
 .sistema{
-  padding:76px 0;
+  padding:90px 0 0;
   border-bottom:1px solid var(--border);
 }
 .sistema:last-of-type{border-bottom:none;}
@@ -386,23 +377,12 @@ pre code{
 
 /* footer */
 footer{
-  padding:50px 0 70px;
+  padding:50px 0 50px;
   text-align:center;
-}
-footer p{
-  color:var(--muted);
-  font-size:13.5px;
-  margin:0;
-}
-footer .badges{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin-bottom:18px;
-  flex-wrap:wrap;
 }
 
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
   html{scroll-behavior:auto;}
 }
+ 

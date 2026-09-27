@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="./script.js"defer></script>
 <title>Sistemas Arduino — Tinkercad + Testes Físicos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,7 +80,7 @@
 
       <div class="code-panel">
         <div class="code-bar">
-          <span class="fname">💡 <b>sistema1_presenca.ino</b></span>
+          <span class="fname"> <b>Código Sistema 1</b></span>
           <button class="copy-btn" data-target="code1">copiar código</button>
         </div>
         <pre><code id="code1">const int led = 13;
@@ -178,7 +179,9 @@ void loop() {
 
       <div class="code-panel">
         <div class="code-bar">
-          <span class="fname">🅿️ <b>sistema2_estacionamento.ino</b></span>
+          <span class="fname"> 
+            <b>Código Sistema 2</b>
+          </span>
           <button class="copy-btn" data-target="code2">copiar código</button>
         </div>
         <pre><code id="code2">// Pinos
@@ -274,8 +277,8 @@ void loop() {
             </ul>
             <div class="logic">
               <div class="logic-row"><span class="cond">Temperatura e umidade dentro dos valores definidos</span><span class="out" style="color:var(--green)">LED verde</span></div>
-              <div class="logic-row"><span class="cond">Temperatura acima do limite</span><span class="out" style="color:var(--red)">LED vermelho</span></div>
-              <div class="logic-row"><span class="cond">Umidade abaixo do limite</span><span class="out" style="color:var(--yellow)">LED amarelo</span></div>
+              <div class="logic-row"><span class="cond">Temperatura e Umidade ruins</span><span class="out" style="color:var(--red)">LED vermelho</span></div>
+              <div class="logic-row"><span class="cond">Umidade ou Temperatura ruim</span><span class="out" style="color:var(--yellow)">LED amarelo</span></div>
             </div>
           </div>
 
@@ -309,87 +312,80 @@ void loop() {
 
       <div class="code-panel">
         <div class="code-bar">
-          <span class="fname">🌱 <b>sistema3_estufa.ino</b></span>
+          <span class="fname">
+            <b>Código Sistema 3</b>
+          </span>
           <button class="copy-btn" data-target="code3">copiar código</button>
         </div>
         <pre><code id="code3">const int tempPin = A0;
-const int umidadePin = A1;
+  const int umidadePin = A1;
 
-const int verde = 8;
-const int amarelo = 10;
-const int vermelho = 12;
+  const int verde = 8;
+  const int amarelo = 10;
+  const int vermelho = 12;
 
-void setup() {
+  void setup() {
 
-  Serial.begin(9600);
+    Serial.begin(9600);
 
-  pinMode(verde, OUTPUT);
-  pinMode(amarelo, OUTPUT);
-  pinMode(vermelho, OUTPUT);
-
-}
-
-void loop() {
-
-  // TMP36
-  int leituraTemp = analogRead(tempPin);
-
-  float tensao = leituraTemp * (5.0 / 1023.0);
-
-  float temperatura = (tensao - 0.5) * 100;
-
-  // Sensor de umidade
-  int umidade = analogRead(umidadePin);
-
-  Serial.print("Temperatura: ");
-  Serial.print(temperatura);
-
-  Serial.print(" C   Umidade: ");
-  Serial.println(umidade);
-
-  digitalWrite(verde, LOW);
-  digitalWrite(amarelo, LOW);
-  digitalWrite(vermelho, LOW);
-
-  bool temperaturaRuim = temperatura > 30 || temperatura < -10;
-
-  bool umidadeBaixa = umidade < 50;
-
-  if (!temperaturaRuim && !umidadeBaixa) {
-
-    return digitalWrite(verde, HIGH);
+    pinMode(verde, OUTPUT);
+    pinMode(amarelo, OUTPUT);
+    pinMode(vermelho, OUTPUT);
 
   }
 
-  if (temperaturaRuim && umidadeBaixa) {
+  void loop() {
 
-    return digitalWrite(vermelho, HIGH);
+    // TMP36
+    int leituraTemp = analogRead(tempPin);
 
-  }
+    float tensao = leituraTemp * (5.0 / 1023.0);
 
-  if (umidadeBaixa || temperaturaRuim) {
+    float temperatura = (tensao - 0.5) * 100;
 
-    return digitalWrite(amarelo, HIGH);
+    // Sensor de umidade
+    int umidade = analogRead(umidadePin);
 
-  }
+    Serial.print("Temperatura: ");
+    Serial.print(temperatura);
 
-  delay(500);
+    Serial.print(" C   Umidade: ");
+    Serial.println(umidade);
 
-}</code></pre>
+    digitalWrite(verde, LOW);
+    digitalWrite(amarelo, LOW);
+    digitalWrite(vermelho, LOW);
+
+    bool temperaturaRuim = temperatura > 30 || temperatura < -10;
+
+    bool umidadeBaixa = umidade < 50;
+
+    if (!temperaturaRuim && !umidadeBaixa) {
+
+      return digitalWrite(verde, HIGH);
+
+    }
+
+    if (temperaturaRuim && umidadeBaixa) {
+
+      return digitalWrite(vermelho, HIGH);
+
+    }
+
+    if (umidadeBaixa || temperaturaRuim) {
+
+      return digitalWrite(amarelo, HIGH);
+
+    }
+
+    delay(500);
+
+  }</code></pre>
       </div>
     </section>
-
   </main>
-
   <footer>
-    <div class="badges">
-      <span class="meta-pill">Tinkercad</span>
-      <span class="meta-pill">Arduino Uno</span>
-      <span class="meta-pill">Teste físico validado</span>
-    </div>
-    <p>Projetos desenvolvidos, simulados e testados fisicamente para fins de estudo em eletrônica e programação embarcada.</p>
+    <a>Feito por Paula </a>&copy;&reg;
   </footer>
-
-<script src="script.js"></script>
 </body>
 </html>

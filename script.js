@@ -5,13 +5,13 @@ document.querySelectorAll('.copy-btn').forEach(function(btn){
     var texto = codeEl.textContent;
 
     function marcarCopiado(){
-      var original = btn.textContent;
-      btn.textContent = 'copiado ✓';
-      btn.classList.add('done');
-      setTimeout(function(){
-        btn.textContent = original;
-        btn.classList.remove('done');
-      }, 1500);
+      var original = btn.textContent
+      btn.textContent = 'copiado ✓'
+      btn.classList.add('done')
+      setTimeout(()=>{
+        btn.textContent = original
+        btn.classList.remove('done')
+      }, 1500)
     }
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
