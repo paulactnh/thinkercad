@@ -35,7 +35,7 @@
       <div class="sis-head">
         <span class="sis-num">SISTEMA 01</span>
       </div>
-      <h2>Iluminação automática por presença</h2>
+      <h2>Iluminação Automática por Presença</h2>
       <p class="sis-tag">Um sensor de presença combinado a um sensor de luz decide acender o LED — economizando energia ao não ligar a luz quando o ambiente já está claro.</p>
 
       <div class="grid-2">
@@ -74,7 +74,7 @@
         <div class="video-box">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="color:var(--muted)"><path d="M15 10l5-3v10l-5-3"/><rect x="2" y="6" width="13" height="12" rx="2"/></svg>
           <p>Vídeo do Sistema 1 em funcionamento</p>
-          <span class="hint">Troque este bloco pela tag &lt;video&gt; ou por um &lt;iframe&gt; do YouTube</span>
+          <video controls src="./desafio_1.mp4"></video>
         </div>
       </div>
 
@@ -130,7 +130,7 @@ void loop() {
       <div class="sis-head">
         <span class="sis-num">SISTEMA 02</span>
       </div>
-      <h2>Estacionamento inteligente</h2>
+      <h2>Estacionamento Inteligente</h2>
       <p class="sis-tag">Um sensor ultrassônico mede a distância até o veículo e avisa o motorista com o LED: apagado quando há espaço de sobra, piscando ao se aproximar e aceso fixo quando é hora de parar.</p>
 
       <div class="grid-2">
@@ -173,7 +173,7 @@ void loop() {
         <div class="video-box">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="color:var(--muted)"><path d="M15 10l5-3v10l-5-3"/><rect x="2" y="6" width="13" height="12" rx="2"/></svg>
           <p>Vídeo do Sistema 2 em funcionamento</p>
-          <span class="hint">Troque este bloco pela tag &lt;video&gt; ou por um &lt;iframe&gt; do YouTube</span>
+          <video controls src="./desafio_2.mp4"></video>
         </div>
       </div>
 
@@ -232,27 +232,23 @@ void loop() {
 
   // Lógica do desafio
 
-  if (distancia > limite) {
-
-    // Longe
-    digitalWrite(led, LOW);
-
-  } else if (distancia > limite / 2) {
-
-    // Aproximando
+ if (distancia <= limite) {
+    // 1. Muito perto 
+    digitalWrite(led, HIGH);
+  } 
+  else if (distancia > limite && distancia < (limite * 1.5)) {
+    // 2. Aproximando 
     digitalWrite(led, HIGH);
     delay(300);
     digitalWrite(led, LOW);
     delay(300);
-
-  } else {
-
-    // Muito perto
-    digitalWrite(led, HIGH);
-
+  } 
+  else {
+    // 3. Longe
+    digitalWrite(led, LOW);
   }
 
-  delay(50);
+  delay(500);
 }</code></pre>
       </div>
     </section>
@@ -262,7 +258,7 @@ void loop() {
       <div class="sis-head">
         <span class="sis-num">SISTEMA 03</span>
       </div>
-      <h2>Monitoramento de estufa</h2>
+      <h2>Monitoramento de Estufa</h2>
       <p class="sis-tag">Temperatura e umidade são lidas continuamente e três LEDs coloridos informam, à distância, se as plantas estão em condição ideal, com calor excessivo ou com pouca umidade.</p>
 
       <div class="grid-2">
@@ -276,7 +272,7 @@ void loop() {
               <li><b>LEDs (pinos 8, 10 e 12):</b> verde, amarelo e vermelho</li>
             </ul>
             <div class="logic">
-              <div class="logic-row"><span class="cond">Temperatura e umidade dentro dos valores definidos</span><span class="out" style="color:var(--green)">LED verde</span></div>
+              <div class="logic-row"><span class="cond">Temperatura e umidade dentro dos valores definidos      </span><span class="out" style="color:var(--green)">LED verde</span></div>
               <div class="logic-row"><span class="cond">Temperatura e Umidade ruins</span><span class="out" style="color:var(--red)">LED vermelho</span></div>
               <div class="logic-row"><span class="cond">Umidade ou Temperatura ruim</span><span class="out" style="color:var(--yellow)">LED amarelo</span></div>
             </div>
@@ -306,7 +302,7 @@ void loop() {
         <div class="video-box">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="color:var(--muted)"><path d="M15 10l5-3v10l-5-3"/><rect x="2" y="6" width="13" height="12" rx="2"/></svg>
           <p>Vídeo do Sistema 3 em funcionamento</p>
-          <span class="hint">Troque este bloco pela tag &lt;video&gt; ou por um &lt;iframe&gt; do YouTube</span>
+            <video controls src="./desafio_3.mp4"></video>
         </div>
       </div>
 
