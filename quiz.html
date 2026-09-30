@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz SAEP — Sistemas Arduino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+
+  <header class="quiz-header">
+    <div class="wrap">
+      <a class="back-link" href="index.html">← Voltar para os sistemas</a>
+      <span class="eyebrow-chip"><span class="dot"></span> Avaliação modelo SAEP</span>
+      <h1>Teste seus conhecimentos</h1>
+      <p class="lead">10 questões contextualizadas sobre robótica industrial, sensores IoT, multímetro, Arduino, ESP e os códigos utilizados nos sistemas desta página.</p>
+    </div>
+  </header>
+
+  <main class="wrap quiz-main">
+
+    <!-- ---------- TELA INICIAL ---------- -->
+    <section id="intro-screen" class="quiz-card">
+      <h2>Antes de começar</h2>
+      <p>Cada questão apresenta um contexto (uma situação real de aplicação), seguido de uma pergunta e 4 alternativas. Apenas uma alternativa está correta.</p>
+      <ul>
+        <li>10 questões no total</li>
+        <li>1 sobre robôs industriais · 2 sobre sensores IoT/industriais · 1 sobre multímetro</li>
+        <li>2 sobre Arduino (conceitos e portas) · 1 sobre ESP · 3 sobre interpretação de código</li>
+        <li>O gabarito e as explicações aparecem somente ao final</li>
+      </ul>
+      <button id="start-btn" class="btn-primary">Começar quiz</button>
+    </section>
+
+    <!-- ---------- TELA DA QUESTÃO ---------- -->
+    <section id="quiz-screen" class="quiz-card" hidden>
+      <div class="quiz-progress">
+        <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        <span id="progress-text">Questão 1 de 10</span>
+      </div>
+
+      <span class="tema-badge" id="tema-badge"></span>
+      <div class="contexto-box" id="contexto-box"></div>
+      <p class="pergunta" id="pergunta-text"></p>
+      <div class="alternativas" id="alternativas-container"></div>
+
+      <div class="quiz-nav">
+        <button id="prev-btn" class="btn-secondary">Voltar</button>
+        <button id="next-btn" class="btn-primary" disabled>Próxima</button>
+      </div>
+    </section>
+
+    <!-- ---------- TELA DE RESULTADO ---------- -->
+    <section id="result-screen" class="quiz-card" hidden>
+      <h2>Resultado</h2>
+      <div class="score-box">
+        <span class="score-number" id="score-number">0/10</span>
+        <span class="score-label" id="score-label"></span>
+      </div>
+      <button id="restart-btn" class="btn-secondary">Refazer quiz</button>
+      <div class="review-list" id="review-list"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="badges">
+      <span class="meta-pill">Modelo SAEP</span>
+      <span class="meta-pill">10 questões</span>
+      <span class="meta-pill">Correção ao final</span>
+    </div>
+    <p>Avaliação elaborada para fins de estudo, com base nos conteúdos e nos sistemas apresentados neste site.</p>
+  </footer>
+
+<script src="quiz.js"></script>
+</body>
+</html>
