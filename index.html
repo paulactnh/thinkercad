@@ -1,20 +1,154 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <title>IoT - Arduino e Robótica</title>
 </head>
+
 <body>
+
     <header>
         <nav>
-            <a href="./index.html">Home</a>&emsp;
-            <a href="./thinkercad.html">Thinkercad</a>
+            <a href="./index.html">Home</a> &emsp;
+            <a href="./html/thinkercad.html">Tinkercad</a> &emsp;
+            <a href="./html/quiz.html">Quiz</a> &emsp;
         </nav>
     </header>
+
+
     <main>
-        <h1>Internet das Coisas</h1>
+
+        <section class="hero">
+            <span>ARDUINO • IoT • ROBÓTICA</span>
+
+            <h1>
+                Internet das Coisas
+            </h1>
+
+            <p>
+                Aprenda sobre Arduino, sensores, Tinkercad,
+                Internet das Coisas e robôs industriais.
+            </p>
+
+            <a class="botao" href="#conteudos">
+                Começar
+            </a>
+        </section>
+
+
+        <section id="conteudos">
+
+            <h2>Conteúdos</h2>
+
+            <div class="cards">
+
+                <article>
+                    <h3>Arduino e Tinkercad</h3>
+
+                    <p>
+                        Aprenda a criar circuitos e programar
+                        Arduino através de simulações.
+                    </p>
+
+                    <a href="./html/thinkercad.html">
+                        Ver conteúdo →
+                    </a>
+                </article>
+
+
+                <article>
+                    <h3>Robótica Industrial</h3>
+
+                    <p>
+                        Conheça os robôs utilizados na indústria
+                        e como funciona a automação.
+                    </p>
+
+                    <a href="#robotica">
+                        Saiba mais →
+                    </a>
+                </article>
+
+
+                <article>
+                    <h3>IoT e Sensores</h3>
+
+                    <p>
+                        Entenda como sensores coletam dados
+                        e como dispositivos se comunicam.
+                    </p>
+
+                    <a href="#iot">
+                        Saiba mais →
+                    </a>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <section id="robotica" class="conteudo">
+
+            <h2>Robótica Industrial</h2>
+
+            <p>
+                Robôs industriais são utilizados para automatizar
+                tarefas como montagem, soldagem, pintura e movimentação
+                de peças.
+            </p>
+
+        </section>
+
+
+        <section id="iot" class="conteudo">
+
+            <h2>Internet das Coisas e Sensores</h2>
+
+            <p>
+                A Internet das Coisas permite conectar objetos e
+                dispositivos para coletar, transmitir e utilizar dados.
+            </p>
+
+            <div class="sensores">
+                <span>LDR</span>
+                <span>Ultrassônico</span>
+                <span>DHT</span>
+                <span>PIR</span>
+            </div>
+
+        </section>
+
+
+        <section class="quiz">
+
+            <h2>Teste seus conhecimentos</h2>
+
+            <p>
+                Faça o quiz sobre IoT, Arduino e sensores.
+            </p>
+
+            <a class="botao" href="./html/quiz.html">
+                Fazer Quiz
+            </a>
+
+        </section>
+
     </main>
+
+
+    <footer>
+        <p>
+            Projeto de IoT, Arduino e Robótica
+        </p>
+    </footer>
+
+
+    <script src="./js/script.js"></script>
+
 </body>
+
 </html>
