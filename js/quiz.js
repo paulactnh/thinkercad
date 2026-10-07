@@ -262,7 +262,7 @@ limite = map(valorSensor, 0, 1023, 10, 150);
 // ---------- 10) CÓDIGO (3) — CONDIÇÕES COMBINADAS ----------
 {
   tema: "Código",
-  contexto: "Um sistema de monitoramento de uma estufa possui três indicadores: verde, amarelo e vermelho. O vermelho deve indicar uma situação em que a temperatura esteja acima do limite E a umidade esteja abaixo do limite.",
+  contexto: "Um sistema de monitoramento de uma estufa possui três indicadores: verde, amarelo e vermelho. O vermelho deve indicar uma situação em que a temperatura esteja acima do limite e a umidade esteja abaixo do limite.",
   codigo: `
 if (temperaturaRuim && umidadeBaixa) {
   digitalWrite(vermelho, HIGH);

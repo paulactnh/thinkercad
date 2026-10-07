@@ -72,24 +72,6 @@ nav a:hover{
   mask-image: radial-gradient(ellipse at 50% 20%, black 0%, transparent 70%);
 }
 .hero-inner{position:relative;}
-.eyebrow-chip{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  font-family:var(--mono);
-  font-size:12.5px;
-  color:var(--amber);
-  border:1px solid var(--amber-soft);
-  background:var(--amber-soft);
-  padding:6px 12px;
-  border-radius:999px;
-}
-.eyebrow-chip .dot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 8px var(--green);
-  animation:pulse 2s ease-in-out infinite;
-}
 @keyframes pulse{
   0%,100%{opacity:1;}
   50%{opacity:.35;}
